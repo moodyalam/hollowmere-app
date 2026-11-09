@@ -1,0 +1,12 @@
+# Keep secrets and clutter out of the image.
+.env
+.git
+.github
+.venv
+__pycache__
+.pytest_cache
+.ruff_cache
+ops
+tools
+tests
+*.log

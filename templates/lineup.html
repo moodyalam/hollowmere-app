@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0716">
+  <title>{{ fest }}: your line-up</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<main>
+  <header class="top">
+    <div>
+      <h1 class="wordmark" id="fest">{{ fest }}</h1>
+      <p class="where">Somerset · Sat 21 Nov</p>
+    </div>
+    <span class="version" id="version" aria-label="App version">v{{ version }}</span>
+  </header>
+
+  <section class="band" id="band" aria-label="Your wristband">
+    <div class="band-row">
+      <div>
+        <p class="band-label">Wristband</p>
+        <p class="ticket" id="ticket">№ …</p>
+      </div>
+      <span class="tier" id="tier">…</span>
+    </div>
+  </section>
+
+  <section class="sorry" id="sorry" role="alert" hidden>
+    <h2>Sorry, something went wrong.</h2>
+    <p>Reference</p>
+    <p class="reference" id="reference">—</p>
+    <p class="hint">Show this to festival support. The page keeps trying by itself.</p>
+  </section>
+
+  <section id="today" aria-labelledby="today-title">
+    <h2 id="today-title">Saturday line-up</h2>
+    <ol class="sets" id="sets"></ol>
+    <button class="button" id="reveal" type="button">Reveal the headliner</button>
+  </section>
+
+  <p class="status" id="status" aria-live="polite"><span class="dot" aria-hidden="true"></span><span id="status-text">Loading…</span></p>
+</main>
+<script src="/static/lineup.js"></script>
+</body>
+</html>

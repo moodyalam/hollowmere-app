@@ -1,0 +1,10 @@
+[
+  {"time": "12:00", "artist": "Velvet Static", "stage": "The Hollow"},
+  {"time": "13:30", "artist": "Kite Season", "stage": "Lantern Tent"},
+  {"time": "15:00", "artist": "Marsh Lights", "stage": "Main Field"},
+  {"time": "16:45", "artist": "DJ Bramble", "stage": "The Hollow"},
+  {"time": "18:15", "artist": "Paper Moons", "stage": "Lantern Tent"},
+  {"time": "19:45", "artist": "Neon Orchard", "stage": "Main Field"},
+  {"time": "21:15", "artist": "Saint Ember", "stage": "The Hollow"},
+  {"time": "22:30", "artist": "The Midnight Tide", "stage": "Main Field", "headliner": true}
+]

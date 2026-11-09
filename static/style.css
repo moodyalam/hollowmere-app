@@ -1,0 +1,359 @@
+/* Hollowmere Festival: night-sky look for phones. Contrast checked for WCAG AA. */
+:root {
+  --night: #0b0716;
+  --night-2: #160d2a;
+  --card: rgba(255, 255, 255, 0.06);
+  --card-line: rgba(255, 255, 255, 0.12);
+  --ink: #f6f1ff;
+  --muted: #c3b8e0;
+  --pink: #ff3d8b;
+  --amber: #ffb547;
+  --teal: #2de2c4;
+  --gold-1: #f9e29c;
+  --gold-2: #d4a537;
+  --danger: #ff6b6b;
+  --sunset: linear-gradient(100deg, var(--pink), var(--amber));
+  --display: "Avenir Next Condensed", "Arial Narrow", "Roboto Condensed", "Helvetica Neue", system-ui, sans-serif;
+  --body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { background: var(--night); }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.45;
+  background:
+    radial-gradient(120% 60% at 50% -10%, rgba(255, 61, 139, 0.35), transparent 60%),
+    radial-gradient(90% 50% at 100% 0%, rgba(255, 181, 71, 0.18), transparent 60%),
+    linear-gradient(180deg, var(--night-2), var(--night) 55%);
+  background-attachment: fixed;
+}
+
+/* A few stars, drawn with gradients: no images to download. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 18%, #fff8, transparent),
+    radial-gradient(1px 1px at 72% 9%, #fff9, transparent),
+    radial-gradient(1.5px 1.5px at 88% 30%, #fff6, transparent),
+    radial-gradient(1px 1px at 35% 6%, #fff7, transparent),
+    radial-gradient(1px 1px at 55% 24%, #fff5, transparent);
+}
+
+main {
+  position: relative;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 20px 16px 40px;
+}
+
+a { color: var(--amber); }
+
+:focus-visible {
+  outline: 3px solid var(--amber);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+/* ---- Top bar ---------------------------------------------------------- */
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.wordmark {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 28px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.05;
+  background: var(--sunset);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.where {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.version {
+  flex: none;
+  padding: 6px 12px;
+  border: 1px solid var(--card-line);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--card);
+}
+
+/* ---- The wristband ---------------------------------------------------- */
+.band {
+  position: relative;
+  margin: 22px 0 8px;
+  padding: 18px 20px;
+  border-radius: 18px;
+  overflow: hidden;
+  color: #10091c;
+  background: linear-gradient(120deg, #7ff3e0, var(--teal) 45%, #19b9a1);
+  box-shadow: 0 12px 40px rgba(45, 226, 196, 0.25);
+}
+
+/* The woven fabric: fine diagonal threads over the colour. */
+.band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.06) 0 2px, transparent 2px 6px);
+  pointer-events: none;
+}
+
+.band.vip {
+  background: linear-gradient(120deg, var(--gold-1), var(--gold-2) 50%, #f3d27a);
+  box-shadow: 0 12px 44px rgba(249, 210, 120, 0.35);
+}
+
+/* VIP foil: a slow shine across the band. */
+.band.vip::after {
+  content: "";
+  position: absolute;
+  inset: -50% auto -50% -60%;
+  width: 40%;
+  transform: rotate(20deg);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  animation: shine 4s ease-in-out infinite;
+}
+
+@keyframes shine {
+  0%, 55% { left: -60%; }
+  100% { left: 130%; }
+}
+
+.band-row {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.band-label {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.ticket {
+  margin: 2px 0 0;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 46px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+.tier {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: #10091c;
+}
+
+/* ---- Line-up ---------------------------------------------------------- */
+h2 {
+  margin: 26px 0 10px;
+  font-family: var(--display);
+  font-size: 22px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.sets {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.set {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 14px;
+  align-items: center;
+  padding: 14px 16px;
+  border: 1px solid var(--card-line);
+  border-radius: 16px;
+  background: var(--card);
+  backdrop-filter: blur(6px);
+}
+
+.time {
+  font-family: var(--mono);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--amber);
+}
+
+.artist {
+  margin: 0;
+  font-weight: 750;
+  font-size: 19px;
+}
+
+.stage {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.set.backstage {
+  border-color: var(--gold-1);
+  background: linear-gradient(120deg, rgba(249, 226, 156, 0.18), rgba(212, 165, 55, 0.08));
+}
+
+.set.backstage .stage { color: #10091c; background: var(--gold-1); }
+
+.set.headliner {
+  border: 0;
+  background: var(--sunset);
+  color: #10091c;
+}
+
+.set.headliner .time { color: #10091c; }
+.set.headliner .stage { color: #10091c; background: rgba(255, 255, 255, 0.45); }
+
+.mystery {
+  margin: 0;
+  font-weight: 800;
+  font-size: 19px;
+  letter-spacing: 0.3em;
+}
+
+/* ---- Buttons ---------------------------------------------------------- */
+.button {
+  display: block;
+  width: 100%;
+  margin: 14px 0 0;
+  padding: 16px 20px;
+  border: 0;
+  border-radius: 14px;
+  font: inherit;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-decoration: none;
+  color: #10091c;
+  background: var(--sunset);
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(255, 61, 139, 0.35);
+}
+
+.button:active { transform: scale(0.98); }
+
+.button[disabled] { opacity: 0.6; cursor: default; }
+
+/* ---- Status line and messages ---------------------------------------- */
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--teal);
+  box-shadow: 0 0 0 0 rgba(45, 226, 196, 0.7);
+  animation: pulse 2s infinite;
+}
+
+.status.waiting .dot { background: var(--amber); }
+
+@keyframes pulse {
+  70% { box-shadow: 0 0 0 10px rgba(45, 226, 196, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(45, 226, 196, 0); }
+}
+
+.sorry {
+  margin: 22px 0;
+  padding: 22px 20px;
+  border: 2px solid var(--danger);
+  border-radius: 18px;
+  background: rgba(255, 107, 107, 0.1);
+}
+
+.sorry h2 { margin-top: 0; color: var(--ink); }
+
+.reference {
+  display: inline-block;
+  margin: 6px 0 4px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-family: var(--mono);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  background: #000;
+}
+
+.hint { color: var(--muted); font-size: 15px; }
+
+.hero {
+  margin: 48px 0 24px;
+  font-family: var(--display);
+  font-size: 52px;
+  font-weight: 800;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.hero span {
+  background: var(--sunset);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+[hidden] { display: none !important; }
+
+/* Respect "reduce motion" in the phone's settings. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
