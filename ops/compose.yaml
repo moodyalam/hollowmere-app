@@ -1,0 +1,61 @@
+# Lecture 7: the Hollowmere app "on site", on your laptop.
+#   cd ops
+#   docker compose up -d
+# Three services: the app, pretend festival-goers, and Prometheus watching.
+# With phones (the lecturer's laptop):  docker compose --profile phones up -d
+name: hollowmere-live
+
+services:
+  # The app. Deploying a release = changing the tag below, then
+  # "docker compose up -d". Rolling back = changing it back.
+  app:
+    image: ghcr.io/novastack-hq/hollowmere-app:1.0
+    ports:
+      - "8000:8000"
+    # Settings live outside the image: change them here, not in the code,
+    # and the same image runs anywhere.
+    environment:
+      FEST_NAME: "Hollowmere Festival"
+      LOG_LEVEL: "INFO"
+    # Liveness: Docker asks /health every 5 seconds and marks the box
+    # "healthy" or "unhealthy" (see docker compose ps).
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+    # If the process dies, start it again.
+    restart: unless-stopped
+
+  # Pretend festival-goers (tools/traffic.py), about two checks a second.
+  crowd:
+    image: python:3.12-slim
+    command: ["python", "/traffic.py", "http://app:8000"]
+    volumes:
+      - ../tools/traffic.py:/traffic.py:ro
+    depends_on:
+      - app
+    restart: unless-stopped
+
+  # Prometheus: reads /metrics every 5 seconds, stores the numbers and checks
+  # the alert rules in alerts.yml. Open http://localhost:9090
+  prometheus:
+    image: prom/prometheus:v3.16.0
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./alerts.yml:/etc/prometheus/alerts.yml:ro
+    depends_on:
+      - app
+
+  # Lecturer only: a free Cloudflare quick tunnel gives the laptop's app a
+  # public https address that phones can open. Started only with --profile phones.
+  # Find the address:  docker compose logs tunnel | grep trycloudflare
+  tunnel:
+    image: cloudflare/cloudflared:2026.10.7
+    command: ["tunnel", "--no-autoupdate", "--url", "http://app:8000"]
+    profiles: ["phones"]
+    depends_on:
+      - app
+    restart: unless-stopped

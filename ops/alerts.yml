@@ -1,0 +1,18 @@
+# Lecture 7: one alert, on a symptom festival-goers feel (errors), not a cause.
+groups:
+  - name: hollowmere
+    rules:
+      - alert: FestErrorsHigh
+        # Of all /lineup requests in the last minute, what share failed (5xx)?
+        expr: |
+          sum(rate(fest_requests_total{path="/lineup", status=~"5.."}[1m]))
+            /
+          sum(rate(fest_requests_total{path="/lineup"}[1m]))
+            > 0.05
+        # Only fire if it stays above 5% for a whole minute (no false alarms).
+        for: 1m
+        labels:
+          severity: page
+        annotations:
+          summary: "More than 5% of line-up requests are failing"
+          runbook: "Roll back first, then find the cause."

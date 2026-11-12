@@ -1,0 +1,11 @@
+# Fallback H-B: point Prometheus and the crowd at Cloud Run instead of the laptop.
+# Set CLOUD_RUN_URL first, e.g. export CLOUD_RUN_URL=https://hollowmere-abc123.a.run.app
+services:
+  crowd:
+    command: ["python", "/traffic.py", "${CLOUD_RUN_URL:?set CLOUD_RUN_URL}"]
+    depends_on: !reset []
+  prometheus:
+    volumes:
+      - ./cloudrun/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./alerts.yml:/etc/prometheus/alerts.yml:ro
+    depends_on: !reset []

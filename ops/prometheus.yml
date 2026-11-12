@@ -1,0 +1,12 @@
+# Lecture 7: what Prometheus watches, and how often.
+global:
+  scrape_interval: 5s      # read every target's /metrics every 5 seconds
+  evaluation_interval: 5s  # check the alert rules every 5 seconds
+
+rule_files:
+  - /etc/prometheus/alerts.yml
+
+scrape_configs:
+  - job_name: hollowmere
+    static_configs:
+      - targets: ["app:8000"]   # the service's name in compose.yaml, and its port
