@@ -700,7 +700,7 @@ def slow_test_seen(rule: str | None) -> None:
                        + '", alertstate="firing"}[2h])')
     ok(fired == 1, f"I14 {rule} fired during your slow test (last 2 hours)",
        "Keep SLOW_MS on until the Alerts page says firing (pending, then "
-       "`for: 1m`). Restarting Prometheus with `up -d` loses its history.")
+       "`for: 1m`). `docker compose down` wipes Prometheus's history: use `up -d`.")
 
 
 def intermediate() -> None:
