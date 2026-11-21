@@ -25,7 +25,7 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 
 # Every running box can say which release it is. CI builds the image from the
 # tagged commit on the production branch.
-APP_VERSION = "1.0"
+APP_VERSION = "1.1"
 
 app = Flask(__name__)
 # Behind a tunnel or Cloud Run, the visitor's address arrives in X-Forwarded-*
