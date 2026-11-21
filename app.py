@@ -25,7 +25,7 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 
 # Every running box can say which release it is. CI builds the image from the
 # tagged commit on the production branch.
-APP_VERSION = "1.0"
+APP_VERSION = "1.1"
 
 app = Flask(__name__)
 # Behind a tunnel or Cloud Run, the visitor's address arrives in X-Forwarded-*
@@ -182,9 +182,19 @@ def wants_page():
 # ---------------------------------------------------------------------------
 # The line-up.
 # ---------------------------------------------------------------------------
+# FEST-42 (release 1.1): VIP wristbands also see the secret backstage sets.
+BACKSTAGE = [
+    {"time": "23:45", "artist": "Velvet Static (acoustic)", "stage": "Backstage Bar", "backstage": True},
+    {"time": "00:30", "artist": "Silent disco: DJ Bramble", "stage": "Backstage Bar", "backstage": True},
+]
+EXTRA_SETS = {"General": [], "vip": BACKSTAGE}
+
+
 def lineup_for(tier):
-    """The sets this wristband can see. Release 1.0: everyone sees the same."""
-    return LINEUP
+    """The sets this wristband can see: the line-up, plus any extras for its tier."""
+    if tier is None:
+        return LINEUP
+    return LINEUP + EXTRA_SETS[tier]
 
 
 @app.get("/")
